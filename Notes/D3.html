@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="exporter-version" content="Evernote Mac 6.7.1 (453574)"/><meta name="author" content="charles@charleshurt.com"/><meta name="created" content="2016-06-10 15:53:20 +0000"/><meta name="source" content="desktop.mac"/><meta name="updated" content="2016-06-13 01:16:44 +0000"/><title>D3</title></head><body>
+<ul>
+<li>Data Driven Visualizations</li>
+<li>CSS style selectors</li>
+<li>jQuery style chaining</li>
+<li>Has data binding</li>
+<li>Incoming date --&gt; D3 parsing --&gt; AND/OR filter through a function --&gt;Formatted data</li>
+<li>Adds transitions and animations, and physics </li>
+<li>Click and Drag behaviors</li>
+</ul>
+<div><br/></div>
+<div><b>DOM SELECTION</b></div>
+<div>Two ways to select</div>
+<ol>
+<li><span style="font-family: 'Courier New';">d3.select // Select <span style="color: rgb(255, 38, 0);">first</span> <span style="color: rgb(255, 38, 0);">only</span></span></li>
+<li><span style="font-family: 'Courier New';">d3.selectAll('.item').text('this is the new innerHTML')</span></li>
+</ol>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><span style="font-family: 'Courier New';">.selectAll</span> does <i>not</i> return an array, it is wrapped d3 similar to jQuery</div>
+<div><span style="font-family: 'Courier New';">.selectAll('.item')[2]</span> does not work-instead use something like this:</div>
+<div><span style="font-family: 'Courier New';">.select('.item<span style="color: rgb(255, 38, 0);">:nth-child(2)</span>')</span> // Pitfall this is <span style="color: rgb(255, 38, 0);">not</span> a zero-based index</div>
+<div><br/></div>
+<div>Other examples</div>
+<div><span style="font-family: 'Courier New';">.select('.item:nth-child(<span style="color: rgb(255, 38, 0);">odd</span>)')</span></div>
+<div><span style="font-family: 'Courier New';">.select('.item:nth-child(<span style="color: rgb(255, 38, 0);">n+3</span>)')</span></div>
+<div><span style="font-family: 'Courier New';">.select('.item:nth-child(<span style="color: rgb(255, 38, 0);">4n</span>)')</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><b>MODIFY ELEMENT CONTENT</b></div>
+<div><span style="font-family: 'Courier New';">.text('Here I am')</span></div>
+<div><span style="font-family: 'Courier New';">.html('&lt;strong&gt;Now I am here&lt;/strong&gt;')</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><b>APPEND</b></div>
+<div><span style="font-family: 'Courier New';">d3.select('.cSomething')</span></div>
+<div><span style="font-family: 'Courier New';">  .append('div')</span></div>
+<div><span style="font-family: 'Courier New';">  .html('&lt;strong&gt;I am a new div&lt;/strong&gt;')</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><b>INSERT</b></div>
+<div><span style="font-family: 'Courier New';">d3.select('.cSomething')</span></div>
+<div><span style="font-family: 'Courier New';">  .insert('span', ':nth-child(3)') // 3rd item selected</span></div>
+<div><span style="font-family: 'Courier New';">  </span></div>
+<div><span style="font-family: 'Courier New';">  .html('&lt;strong&gt;I am a new div&lt;/strong&gt;')</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div>TL;DR Notice this is odd, because <span style="font-family: 'Courier New';">.select</span> normally returns a single item which is the <i>first</i> match.</div>
+<div>Using <span style="font-family: 'Courier New';">.insert</span> above, the <i>third</i> match is returned, as if <span style="font-family: 'Courier New';">.select</span> was thinking in terms of an array</div>
+<div>of results (like <span style="font-family: 'Courier New';">.selectAll</span> does).</div>
+<div><br/></div>
+<div><b>REMOVE</b></div>
+<div><span style="font-family: 'Courier New';">d3.select('.cSomething:nth-child(3)')</span></div>
+<div><span style="font-family: 'Courier New';">  <span style="color: rgb(255, 38, 0);">.remove()</span></span></div>
+<div><b><br/></b></div>
+<div><b>SETTING CSS ATTRIBUTES</b></div>
+<div>Read add or modify with <span style="font-family: 'Courier New';">.attr</span></div>
+<div><span style="font-family: 'Courier New';">d3.selectAll()</span></div>
+<div><span style="font-family: 'Courier New';">  <span style="color: rgb(255, 38, 0);">.attr('class', 'cHighlight')</span></span></div>
+<div><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);"><br/></span></span></div>
+<div>Pitfall, this will <span style="color: rgb(255, 38, 0);">replace</span> existing classes with <span style="font-family: 'Courier New';">.cHighlight</span></div>
+<div>To get around this, use <span style="font-family: 'Courier New';">.classed</span> instead:</div>
+<div><span style="font-family: 'Courier New';">d3.select...</span></div>
+<div><span style="font-family: 'Courier New';">  <span style="color: rgb(255, 38, 0);">.classed('cHighligh', 'true')</span></span></div>
+<div><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);"><br/></span></span></div>
+<div>To act on more than one property supply a config object:</div>
+<div><span style="font-family: 'Courier New';">d3.select...</span></div>
+<div><span style="font-family: 'Courier New';">  <span style="color: rgb(255, 38, 0);">.classed({</span></span></div>
+<div><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);">    'cHighlight': 'true',</span></span></div>
+<div><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);">    'cBla': true, // Notice quotes not required</span></span></div>
+<div><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);">  }</span></span><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);">)</span></span></div>
+<div><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);"><br/></span></span></div>
+<div>Or style directly</div>
+<div><span style="font-family: 'Courier New';">d3.select...</span></div>
+<div><span style="font-family: 'Courier New';">  <span style="color: rgb(255, 38, 0);">.style({</span></span></div>
+<div><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);">    'background': '...',</span></span></div>
+<div><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);">    'color': '#222'  </span></span></div>
+<div><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);">  }</span></span><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);">)</span></span></div>
+<div><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);"><br/></span></span></div>
+<div><b>DATA SOURCES</b></div>
+<div><b><br/></b></div>
+<div><b>BINDING DATA</b></div>
+<div><span style="font-family: 'Courier New';">d3.selectAll('.cItem')</span></div>
+<div><span style="font-family: 'Courier New';">  .data([true]) // Each value applied to each element</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><span style="font-family: 'Courier New';"> </span>In this case there is only one element in the array</div>
+<div>  and therefor only the first element in the selection results</div>
+<div>  will have the "true" value applied to it.</div>
+<div><br/></div>
+<div>  A more likely scenario, is that the <span style="font-family: 'Courier New';">.data</span> parameter</div>
+<div>  will be large enough to apply to all matches.</div>
+<div><br/></div>
+<div>Another way to pass data</div>
+<div><span style="font-family: 'Courier New';">var myStyles = ['#fefefe']</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><span style="font-family: 'Courier New';">d3.selectAll('.cItem')</span></div>
+<div><span style="font-family: 'Courier New';">  .data(myStyles)</span></div>
+<div><span style="font-family: 'Courier New';">  .style('background', myStyles[0])</span></div>
+<div>This updates the style of the first element<span style="font-family: 'Courier New';">.</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div>Another way to pass data:</div>
+<div>
+<div><span style="font-family: 'Courier New';">var myStyles = ['#fefefe']</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><span style="font-family: 'Courier New';">d3.selectAll('.cItem')</span></div>
+<div><span style="font-family: 'Courier New';">  .data(myStyles)</span></div>
+</div>
+<div><span style="font-family: 'Courier New';">  .style('background', function(d) {</span></div>
+<div><span style="font-family: 'Courier New';">    // The 'd' param comes from the .data</span></div>
+<div><span style="font-family: 'Courier New';">    // The data can be changed </span></div>
+<div><span style="font-family: 'Courier New';">    // The return the data to apply to cur element</span></div>
+<div><span style="font-family: 'Courier New';">    return d</span></div>
+<div><span style="font-family: 'Courier New';">  })</span></div>
+<div>This updates the style of the first element<span style="font-family: 'Courier New';">.</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div>Another way to pass data:</div>
+<div><span style="font-family: 'Courier New';">var myStyles =</span> <span style="font-family: 'Courier New';">['#fefefe', '#efefef', ...]</span><span style="font-family: 'Courier New';"> </span></div>
+<div><span style="font-family: 'Courier New';"> </span></div>
+<div>
+<div>
+<div><span style="font-family: 'Courier New';">d3.selectAll('.cItem')</span></div>
+<div><span style="font-family: 'Courier New';">  .data(myStyles)</span></div>
+</div>
+</div>
+<div><span style="font-family: 'Courier New';">  .style({</span></div>
+<div><span style="font-family: 'Courier New';">    'color': 'white',</span></div>
+<div><span style="font-family: 'Courier New';">    'background': function(d) {</span></div>
+<div>
+<div><span style="font-family: 'Courier New';">      // The 'd' param comes from the .data</span></div>
+<div><span style="font-family: 'Courier New';">      // The data can be changed </span></div>
+</div>
+<div><span style="font-family: 'Courier New';">      // The return the data to apply to cur element</span></div>
+<div><span style="font-family: 'Courier New';">      return d</span></div>
+<div><span style="font-family: 'Courier New';">    })</span></div>
+<div><b> </b></div>
+<div><b><br/></b></div>
+<div>
+<div>Another way to pass data:</div>
+</div>
+<div><span style="font-family: 'Courier New';">var myStyles =</span> <span style="font-family: 'Courier New';">[</span></div>
+<div><span style="font-family: 'Courier New';">{'width':'200px', </span><span style="font-family: 'Courier New';">'color': '#fefefe'},</span></div>
+<div><span style="font-family: 'Courier New';">{'width':'300px', </span><span style="font-family: 'Courier New';">'color': '</span><span style="font-family: 'Courier New';">#efefef</span><span style="font-family: 'Courier New';">'},</span><span style="font-family: 'Courier New';"> </span></div>
+<div><span style="font-family: 'Courier New';">...</span></div>
+<div><span style="font-family: 'Courier New';">]</span></div>
+<div><span style="font-family: 'Courier New';"> </span></div>
+<div>
+<div><span style="font-family: 'Courier New';"> </span></div>
+<div>
+<div>
+<div><span style="font-family: 'Courier New';">d3.selectAll('.cItem')</span></div>
+<div><span style="font-family: 'Courier New';">  .data(myStyles)</span></div>
+</div>
+</div>
+<div><span style="font-family: 'Courier New';">  .style({</span></div>
+<div><span style="font-family: 'Courier New';">    'color': 'white',</span></div>
+<div><span style="font-family: 'Courier New';">    'background': function(d) {</span></div>
+<div>
+<div><span style="font-family: 'Courier New';">      // The 'd' param comes from the .data</span></div>
+<div><span style="font-family: 'Courier New';">      // The data can be changed </span></div>
+</div>
+<div><span style="font-family: 'Courier New';">      // The return the data to apply to cur element</span></div>
+<div><span style="font-family: 'Courier New';">      return d.color</span></div>
+</div>
+<div><span style="font-family: 'Courier New';">    }, // END FIRST PARAM</span></div>
+<div><span style="font-family: 'Courier New';"> </span></div>
+<div><span style="font-family: 'Courier New';">    'width': function(d) {</span></div>
+<div><span style="font-family: 'Courier New';">      return d.width</span></div>
+<div><span style="font-family: 'Courier New';">    }</span></div>
+<div><span style="font-family: 'Courier New';">  )</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><b>INSERTING INTO DOM</b></div>
+<div>Previous to this point, data was being matched and appended to the current selection set</div>
+<div>one to one.  When the <span style="font-family: 'Courier New';">.enter()</span> is used, a virtual sub-selection must be made.  This is done to create</div>
+<div>new elements on-the-fly and just-in-time to be <i>selected</i> and used by the data method.</div>
+<div>This is a little bit like using ng-repeat.</div>
+<div><br/></div>
+<div><span style="font-family: 'Courier New';">var myData = [{...}, {...}, {...}]</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><span style="font-family: 'Courier New';">d3.select(...)<b>.selectAll('div')</b> </span><span style="font-family: 'Courier New';"><span style="color: rgb(255, 38, 0);">Step #3 Select divs even though they don't yet exist</span></span></div>
+<div><span style="font-family: 'Courier New';">  .data()</span></div>
+<div><span style="font-family: 'Courier New';">  .enter().append('div') <span style="color: rgb(255, 38, 0);">Step #1</span> Name what to insert</span></div>
+<div><span style="font-family: 'Courier New';">  .classed('someClass') <span style="color: rgb(255, 38, 0);">Step #2</span> Add the nec classes</span></div>
+<div><span style="font-family: 'Courier New';">  .text(function(d) {</span></div>
+<div><span style="font-family: 'Courier New';">     // Emit the inner HTML for each new div</span></div>
+<div><span style="font-family: 'Courier New';">     d.name</span></div>
+<div><span style="font-family: 'Courier New';">  })</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><span style="color: rgb(255, 38, 0);">Step #3</span> is the tricky part. The <span style="font-family: 'Courier New';">.enter()</span> works on <span style="color: rgb(255, 38, 0);">selected</span> elements.</div>
+<div>But they do not exist until the <span style="font-family: 'Courier New';">.enter()</span> creates them.  So,</div>
+<div>the second <span style="font-family: 'Courier New';">selectAll('div')</span> <span style="color: rgb(255, 38, 0);">pre-selects all divs</span> that will be created by the</div>
+<div><span style="font-family: 'Courier New';">.enter()</span> function. This is also known as a <i>sub-selection.</i></div>
+<div><i><br/></i></div>
+<div>PITFALL: failing to do the sub-select will create data appended in the wrong place,</div>
+<div>(such as after the body tag).</div>
+<div><br/></div>
+<div>Nice color Gray green #93a1a1 Nice matching magenta #c61c6f Dark magenta #840043</div>
+<div><br/></div>
+<div><b>SVG REVIEW</b></div>
+<div><span style="font-family: 'Courier New';">&lt;<b>svg</b> width= height=  style=</span></div>
+<div><span style="font-family: 'Courier New';">  &lt;<b>rect</b> x= y= width= height= style="fill:blue"/&gt;</span></div>
+<div><span style="font-family: 'Courier New';">  &lt;<b>circle</b> cx= cy= r= height= style="fill:white"/&gt;</span></div>
+<div><span style="font-family: 'Courier New';">  &lt;<b>text</b> x= y= font-family fill="red"&gt;This is text&lt;/text&gt;</span></div>
+<div><span style="font-family: 'Courier New';">  &lt;<b>g</b> id='IdTriangle' // Name a group of strokes for re-using</span></div>
+<div><font face="Courier New">    &lt;<b>polyline</b> points="10 35, 30 10,... // notice these are space separated pairs/&gt;</font></div>
+<div><span style="font-family: 'Courier New';">  &lt;/g&gt;</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><span style="font-family: 'Courier New';">  // Make a copy of the group defined as IdTriangle</span></div>
+<div><span style="font-family: 'Courier New';">  &lt;use xlink:href="#IdTriangle" x= y= /&gt;</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><b>RENDER SVG IN D3</b></div>
+<div><span style="font-family: 'Courier New';">d3.select('#IdXX')</span></div>
+<div><span style="font-family: 'Courier New';">  .append('svg')</span></div>
+<div><span style="font-family: 'Courier New';">    .attr('width', 234)</span></div>
+<div><span style="font-family: 'Courier New';">    .attr('height', 234)</span></div>
+<div><span style="font-family: 'Courier New';">    .style('background', #123456)</span></div>
+<div><span style="font-family: 'Courier New';">  </span></div>
+<div><span style="font-family: 'Courier New';">  .append('rect')</span></div>
+<div><span style="font-family: 'Courier New';">    .attr('x', 234)</span></div>
+<div><span style="font-family: 'Courier New';">    .attr('y', 234)</span></div>
+<div>
+<div><span style="font-family: 'Courier New';">    .attr('width', 234)</span></div>
+</div>
+<div><span style="font-family: 'Courier New';">    .attr('height', 234)</span></div>
+<div><span style="font-family: 'Courier New';">    .style('fill', #123456)</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div> </div>
+<div><br/></div>
+<div><b>Key observation:</b> all these function are chaining.  Adding another</div>
+<div><span style="font-family: 'Courier New';">.append</span> here would be chaining to the previous <span style="font-family: 'Courier New';">rect</span> (and not work).  Use d3 call</div>
+<div>to stop the chain, and go back to operating inside the <span style="font-family: 'Courier New';">svg</span> tag.</div>
+<div><span style="font-family: 'Courier New';">  d3.select('svg')</span></div>
+<div><span style="font-family: 'Courier New';">    .append('circle')</span></div>
+<div><span style="font-family: 'Courier New';">    ...</span></div>
+<div><span style="font-family: 'Courier New';"> </span></div>
+<div><b>SCALES</b></div>
+<div>Scales map/scale data to a size that will fit within available screen space.</div>
+<div>Put another way, scales translate values from the number space in  to values in the pixel space.</div>
+<div><span style="color: rgb(4, 51, 255);">If one of the fields in a dataset varies between 0 and 99, that is the domain.</span></div>
+<div><br/></div>
+<div>An instance of a scale can be created like this:</div>
+<div><span style="font-family: 'Courier New';">var myScale = d3.scale.linear()</span></div>
+<div><span style="font-family: 'Courier New';">// Set the domain</span></div>
+<div><span style="font-family: 'Courier New';">myScale.domain([0, 1])</span></div>
+<div><span style="font-family: 'Courier New';">myScale.range([0,99]) Min pixes is 0 max is 99</span></div>
+<div><span style="font-family: 'Courier New';">// NOW data can be projected into the available canvas size</span></div>
+<div><span style="font-family: 'Courier New';">console.log(scale(0.5)) prints 50</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><b>GETTER/SETTER</b></div>
+<div>If <span style="font-family: 'Courier New';">domain()</span> or <span style="font-family: 'Courier New';">range()</span> is called with no parameter they become getters</div>
+<div>which return an array with two members </div>
+<div><br/></div>
+<div><b>Quantitative scales</b> (like an unordered list)</div>
+<div><b>Ordinal scales</b> (order is important)</div>
+<div><br/></div>
+<div><b>Linear scales</b></div>
+<div>Making data fit vertically </div>
+<div><span style="font-family: 'Courier New';">d3.scale.linear().domain().range </span><b> </b>domain plots orig info range is the fit</div>
+<div>Domain is the largest value in the dataset</div>
+<div>Range will be height of chart. These two values are parameter</div>
+<div>that will map (scale) dataset into available screen real estate.</div>
+<div>This mapping function is invoked when setting the attributes of the <span style="font-family: 'Courier New';">.enter()</span></div>
+<div>attributes.</div>
+<div><br/></div>
+<div><b>ORDINAL SCALES</b></div>
+<div><span style="font-family: 'Courier New';">var scale = d3.scale.ordinal()</span></div>
+<div><span style="font-family: 'Courier New';">scale.domain(['a','b','c', 'd'])</span></div>
+<div><span style="font-family: 'Courier New';">scale.range(['Apple', 'Banana', 'Grape', 'Oranges'])</span></div>
+<div><span style="font-family: 'Courier New';">// The range must have a least the same or more elements as the domain</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><br/></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div>Alternatively, this could have been given <span style="font-family: 'Courier New';">.rangePoints([0, 100]) </span></div>
+<div>instead of the range. If this were the case then </div>
+<div><br/></div>
+<div>
+<div><span style="font-family: 'Courier New';">console.log(scale('a')) // Prints 0</span></div>
+<div><span style="font-family: 'Courier New';">console.log(scale('b')) // Prints 33.3333</span></div>
+<div><span style="font-family: 'Courier New';">console.log(scale('c')) // Prints 66.6666</span></div>
+</div>
+<div><span style="font-family: 'Courier New';">console.log(scale('d')) // Prints 100</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div>Because the numbers are not exact, the display of this</div>
+<div>data would be fuzzy.  To make it crisp, use <span style="font-family: 'Courier New';">rangeRoundPoints()</span></div>
+<div>which will respond like this:</div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div>
+<div><span style="font-family: 'Courier New';">console.log(scale('a')) // Prints 0</span></div>
+</div>
+<div><span style="font-family: 'Courier New';">console.log(scale('b')) // Prints 34</span></div>
+<div><span style="font-family: 'Courier New';">console.log(scale('c')) // Prints 67</span></div>
+<div><span style="font-family: 'Courier New';">console.log(scale('d')) // Prints 100</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div> </div>
+<div><br/></div>
+<div>///////////////////////////////////////////////////////////////</div>
+<div><b>INTRODUCTION TO D3 CURRAN KELLEHER</b></div>
+<div>Data-Driven-Documents (Web Docs)</div>
+<div>Galvanize Tutorial on D3 in SF</div>
+<div>github.com/curran/screencasts</div>
+<div><br/></div>
+<div>//////</div>
+<div>How to draw a polygon</div>
+<div>
+<div style="box-sizing: border-box; overflow: auto; font-family: Menlo, Monaco, Consolas, &quot;Courier New&quot;, monospace; font-size: 15px; padding: 10.5px; color: rgb(51, 51, 51); border: 1px solid rgb(204, 204, 204); border-radius: 4px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 255);"><span style="box-sizing: border-box; color: rgb(0, 119, 0);">&lt;svg</span> <span style="box-sizing: border-box; color: rgb(255, 0, 136);">width</span>=<span style="box-sizing: border-box; color: rgb(221, 34, 0);"><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">50</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span></span> <span style="box-sizing: border-box; color: rgb(255, 0, 136);">height</span>=<span style="box-sizing: border-box; color: rgb(221, 34, 0);"><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">50</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span></span><span style="box-sizing: border-box; color: rgb(0, 119, 0);">&gt;</span><br/>
+<span style="box-sizing: border-box; color: rgb(170, 170, 170); text-align: right; padding: 0px 4px; background-color: rgb(236, 236, 236);">2</span>  <span style="box-sizing: border-box; color: rgb(0, 119, 0);">&lt;polygon</span> <span style="box-sizing: border-box; color: rgb(255, 0, 136);">fill</span>=<span style="box-sizing: border-box; color: rgb(221, 34, 0);"><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">yellow</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span></span> <span style="box-sizing: border-box; color: rgb(255, 0, 136);">stroke</span>=<span style="box-sizing: border-box; color: rgb(221, 34, 0);"><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">blue</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span></span> <span style="box-sizing: border-box; color: rgb(255, 0, 136);">stroke-width</span>=<span style="box-sizing: border-box; color: rgb(221, 34, 0);"><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">2</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span></span><br/>
+<span style="box-sizing: border-box; color: rgb(170, 170, 170); text-align: right; padding: 0px 4px; background-color: rgb(236, 236, 236);">3</span>    <span style="box-sizing: border-box; color: rgb(255, 0, 136);">points</span>=<span style="box-sizing: border-box; color: rgb(221, 34, 0);"><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">05,30</span></span><br/>
+<span style="box-sizing: border-box; color: rgb(170, 170, 170); text-align: right; padding: 0px 4px; background-color: rgb(236, 236, 236);">4</span><span style="box-sizing: border-box; color: rgb(221, 34, 0);">            <span style="box-sizing: border-box; color: rgb(221, 17, 68);">15,10</span></span><br/>
+<span style="box-sizing: border-box; color: rgb(170, 170, 170); text-align: right; padding: 0px 4px; background-color: rgb(236, 236, 236);">5</span><span style="box-sizing: border-box; color: rgb(221, 34, 0);">            <span style="box-sizing: border-box; color: rgb(221, 17, 68);">25,30</span><span style="box-sizing: border-box; color: rgb(221, 17, 68);">"</span></span> <span style="box-sizing: border-box; color: rgb(0, 119, 0);">/&gt;</span><br/>
+<span style="box-sizing: border-box; color: rgb(170, 170, 170); text-align: right; padding: 0px 4px; background-color: rgb(236, 236, 236);">6</span><span style="box-sizing: border-box; color: rgb(0, 119, 0);">&lt;/svg&gt;</span><br/></div>
+</div>
+<div><br/></div>
+<div><br/></div>
+<div>What is D3? A Data visualization tool. It's an XML extension of HTML5 which provides a level of abstraction for</div>
+<div>graphing data. Typically, JS is used to control rendering in SVG via D3 calls.</div>
+<div><br/></div>
+<div>The main concepts:</div>
+<div>A data source is required.</div>
+<div>D3 scales data so that it is renderable in a specific sized canvas both x and y.</div>
+<div>D3 provides a mechanism to translate and massage data into more useful formats.</div>
+<div><br/></div>
+<div>Examples done is <b><span style="font-family: 'Courier New';">JSBIN.com</span></b> which will <i>include most commonly used JS Libraries.</i></div>
+<div><i><br/></i></div>
+<div>NOVICE PITFAL: <span style="color: rgb(255, 38, 0);">Don't forget to set the width and height of the</span> <span style="font-family: 'Courier New';">&lt;svg&gt;</span> element, otherwise</div>
+<div>it will cut off the canvas area available.</div>
+<div><br/></div>
+<div><b>CSS</b></div>
+<div><span style="font-family: 'Courier New';">Fill='color' c/b 'none' meaning transparent</span></div>
+<div><span style="font-family: 'Courier New';">stroke='color' c/b  'none'  meaning transparent</span></div>
+<div><span style="font-family: 'Courier New';">stroke-width='default is pixels'</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><b>DRAWING INDEPENDENT LINES</b></div>
+<div><span style="font-family: 'Courier New';">&lt;line x1,y1, x2 y2 [stroke=color stroke-width]&gt;...</span></div>
+<div><span style="font-family: 'Courier New';">&lt;line x1,y1, x2 y2 [stroke=color stroke-width]&gt;...</span></div>
+<div><span style="font-family: 'Courier New';">&lt;line x1,y1, x2 y2 [stroke=color stroke-width]&gt;...</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><b>PATHS</b></div>
+<div><span style="font-family: 'Courier New';">&lt;path d="m## ## L# # ...stroke=color stroke-width=&gt;&lt;/path&gt;</span></div>
+<div>Where "<span style="font-family: 'Courier New';">D</span>" = data,  "<span style="font-family: 'Courier New';">M</span>"= move to and "<span style="font-family: 'Courier New';">L</span>" = Line to</div>
+<div>If the string has a '<span style="font-family: 'Courier New';">z</span>'  at the end, the a fill can be specified because the path to</div>
+<div>original point is done automatically, creating a polygon.</div>
+<div><br/></div>
+<div><b>THE G TAG</b></div>
+<div>A group of elements can be formed by wrapping individual elements with a <span style="font-family: 'Courier New';">&lt;g&gt;</span> tag.</div>
+<div>In addition to this, the group can be mapped to a different location using:</div>
+<div><span style="font-family: 'Courier New';">&lt;g transform="translate(x, y)"&gt;...</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div>In this example if "x" were 50, then the <span style="font-family: 'Courier New';">&lt;g&gt;</span> tag would move</div>
+<div>all its content to the right by 50px.</div>
+<div><br/></div>
+<div><b>TEXT</b></div>
+<div><span style="font-family: 'Courier New';">&lt;text x= y=&gt;Hello &lt;/text&gt;</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><b>ADDING CSS</b></div>
+<div>CSS and classes can be applied to SVG elements to replace inline SVG attributes</div>
+<div><br/></div>
+<div><b>D3.CSV()</b></div>
+<div>Read a .csv file, and run results through a filter.</div>
+<div><br/></div>
+<div><b>CONVENIENT CASTING PREFIXING "+"</b></div>
+<div><span style="font-family: 'Courier New';">+myStringVar</span> converts the string to a number</div>
+<div><br/></div>
+<div><br/></div>
+<div><b>D3 EXAMPLES HTML V.S. JAVASCRIPT</b></div>
+<div>HTML</div>
+<div><span style="font-family: 'Courier New';">&lt;svg width='250' height='250'&gt;</span></div>
+<div><span style="font-family: 'Courier New';">  &lt;rect x='50' y=50' width='20' height='20'&gt; &lt;/rect&gt;</span></div>
+<div><span style="font-family: 'Courier New';">&lt;/svg&gt;</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div>JAVASCRIPT</div>
+<div><span style="font-family: 'Courier New';">var svg = d3.select('body').append('svg')</span></div>
+<div><span style="font-family: 'Courier New';">svg.attr("width", 250)</span></div>
+<div><span style="font-family: 'Courier New';">svg.attr("height", 250)</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><span style="font-family: 'Courier New';">var rect = svg.append('rect')</span></div>
+<div><span style="font-family: 'Courier New';">rect.attr('x', 50)</span></div>
+<div><span style="font-family: 'Courier New';">rect.attr('y', 50)</span></div>
+<div><span style="font-family: 'Courier New';"><br/></span></div>
+<div><span style="font-family: 'Courier New';">rect.attr('width', 20)</span></div>
+<div><span style="font-family: 'Courier New';">rect.attr('height', 20)</span></div>
+<div><br/></div>
+<div><i><br/></i></div>
+<div>  </div>
+<div><br/></div>
+<div> </div>
+<div><br/></div>
+<div><br/></div>
+</body></html>
